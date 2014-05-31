@@ -18,14 +18,16 @@ input[readonly],.status{width:50%;background:#abf;opacity:0.5;}
   window.ffmpegloadinterval=setInterval(function(){document.getElementById('topstatus').innerHTML+='.';},250);
   joey.when('window.ffmpegloaded==true',function(){
     clearInterval(window.ffmpegloadinterval);
-    document.getElementById('topstatus').innerHTML='';});
+    document.getElementById('topstatus').innerHTML='';
     jQuery('.content').slideDown();
+  });
+    
 </script>
 <script async="async" onload="window.ffmpegloaded=true;" src="ffmpeg.js"></script>
 <script>
-
+/*
 jQuery(function(){
-  
+*/  
   window.file1=false;
   window.uia1 = [];
   
@@ -88,8 +90,9 @@ jQuery(function(){
       }catch(ee){$('#status').val('error: '+ee.message);}
         
   }
-
+/*
 });
+*/
 </script>
 </head>
 <body>
