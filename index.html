@@ -10,7 +10,9 @@ body,body *{font-family:arial;color:blue;}
 <script>
   window.ffmpegloaded=false;
   window.ffmpegloadinterval=setInterval(function(){document.getElementById('status').innerHTML+='.';},500);
-  joey.when('window.ffmpegloaded==true',function(){document.getElementById('status').innerHTML='';});
+  joey.when('window.ffmpegloaded==true',function(){
+    clearInterval(window.ffmpegloadinterval);
+    document.getElementById('status').innerHTML='';});
 </script>
 <script async="async" onload="window.ffmpegloaded=true;" src="ffmpeg.js"></script>
 </head>
