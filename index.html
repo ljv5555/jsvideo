@@ -66,16 +66,21 @@ jQuery(function(){
   
   function process()
   {
-      var file = window.file1;
-      var uia=window.uia1;
-      $('#status').val('processing '+file.name+'...');
+      //var file = window.file1;
+      //var uia=window.uia1;
+      uia.length=
+      $('#status').val('processing '+window.file1.name+'...');
+setTimeout(function(){
       try{
-        if(console && console.log){console.log(uia);}
+//        if(console && console.log){console.log(uia);}
+        
+        
+        
         var results = ffmpeg_run({
           files: [
             {
-              data: uia,
-              name: file.name
+              data: window.uia1,
+              name: window.file1.name
             }
           ]
         });
@@ -90,7 +95,7 @@ jQuery(function(){
     
         
       }catch(ee){alert('error: '+ee.message);}
-        
+},2000);       
   }
 /*
 });
