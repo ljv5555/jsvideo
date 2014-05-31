@@ -4,6 +4,11 @@
 <title>jsvideo</title>
 <style>
 body,body *{font-family:arial;color:blue;}
+body,input{font:11px arial;}
+div,input{padding:.5em .5em;margin:.5em .5em;white-space:nobreak;
+border:1px solid #abf;}
+input[readonly],.status{width:50%;background:#abf;opacity:0.5;}
+.topstatus{min-height:20px;width:90%;margin:10px 5% 10px 5%;}
 </style>
 <script src="/joey.js/joey.js"></script>
 <script src="jquery.min.js"></script>
@@ -15,9 +20,84 @@ body,body *{font-family:arial;color:blue;}
     document.getElementById('status').innerHTML='';});
 </script>
 <script async="async" onload="window.ffmpegloaded=true;" src="ffmpeg.js"></script>
+<script>
+  
+  window.file1=false;
+  window.uia1 = [];
+  
+  function loadfile()
+  {
+      $('#status').val('reading file...');
+      var files = document.getElementById('file1').files;
+      if (!files.length) { alert('Please select a file!'); return; }
+      var file = files[0];
+      window.file1=file;
+      var reader = new FileReader();
+      reader.onloadend = function(evt) 
+      {
+        if (evt.target.readyState == FileReader.DONE) 
+        {
+            $('#status').val('Read file. Processing...');
+            var dataarray = evt.target.result;
+            var uint8a = new Uint8Array(dataarray);
+            $('#status').val('Data length = '+dataarray.byteLength);
+            window.uia1=uint8a;
+        }
+      };
+      reader.readAsArrayBuffer(file);
+      
+  }
+  
+  function getDownloadLink(fileData, fileName) {
+    var a = document.createElement('a');
+    a.download = fileName;
+    var blob = new Blob([fileData]);
+    var src = window.URL.createObjectURL(blob);
+    a.href = src;
+    a.textContent = 'Click here to download ' + fileName + "!";
+    return a;
+  }
+  
+  function process()
+  {
+      var file = window.file1;
+      var uia=window.uia1;
+      $('#status').val('processing '+file.name+'...');
+      try{
+        var results = ffmpeg_run({
+          files: [
+            {
+              data: uia,
+              name: file.name
+            }
+          ]
+        });
+        $('#status').val('got results...');
+        
+        results.forEach(function(file) {
+          $('#status').after(getDownloadLink(file.data, file.name));
+        });
+            
+        $('#status').val('done.');
+    
+        
+      }catch(ee){$('#status').val('error: '+ee.message);}
+        
+  }
+  
+</script>
 </head>
 <body>
 <h3>JsVideo</h3>
-<div class="status" id="status">loading ffmpeg.js, please wait...</div>
+<div class="status" id="topstatus" class="topstatus status">loading ffmpeg.js, please wait...</div>
+<div>
+Video: 
+    <input type="file" name="file1" id="file1"/>
+    <input type="button" value="load" onclick="loadfile();"/>
+    <input type="button" value="process" onclick="process();"/>
+</div>
+<div>
+    Status: <input id="status" name="status" class="status" value="Load a file."/>
+</div>
 </body>
 </html>
