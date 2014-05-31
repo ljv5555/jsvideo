@@ -80,9 +80,10 @@ jQuery(function(){
         });
         $('#status').val('got results...');
         
-        results.forEach(function(file) {
+       /* results.forEach(function(file) {
           $('#status').after(getDownloadLink(file.data, file.name));
-        });
+        });*/
+        if(console && console.log){console.log(results);}
             
         $('#status').val('done.');
     
