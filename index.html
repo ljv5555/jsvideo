@@ -6,14 +6,16 @@
 body,body *{font-family:arial;color:blue;}
 </style>
 <script src="/joey.js/joey.js"></script>
+<script src="jquery.min.js"></script>
 <script>
   window.ffmpegloaded=false;
-  
+  window.ffmpegloadinterval=setInterval(function(){document.getElementById('status').innerHTML+='.';},500);
+  joey.when('window.ffmpegloaded==true',function(){document.getElementById('status').innerHTML='';});
 </script>
-<script async="async" onload="window.ffmpegloaded=true;" src=""></script>
+<script async="async" onload="window.ffmpegloaded=true;" src="ffmpeg.js"></script>
 </head>
 <body>
 <h3>JsVideo</h3>
-
+<div class="status" id="status">loading ffmpeg.js, please wait...</div>
 </body>
 </html>
