@@ -15,7 +15,7 @@ input[readonly],.status{width:50%;background:#abf;opacity:0.5;}
 <script src="jquery.min.js"></script>
 <script>
   window.ffmpegloaded=false;
-  window.ffmpegloadinterval=setInterval(function(){document.getElementById('topstatus').innerHTML+='.';},500);
+  window.ffmpegloadinterval=setInterval(function(){document.getElementById('topstatus').innerHTML+='.';},250);
   joey.when('window.ffmpegloaded==true',function(){
     clearInterval(window.ffmpegloadinterval);
     document.getElementById('topstatus').innerHTML='';});
@@ -94,7 +94,7 @@ input[readonly],.status{width:50%;background:#abf;opacity:0.5;}
 </head>
 <body>
 <h3>JsVideo</h3>
-<div class="status" id="topstatus" class="topstatus status">loading ffmpeg.js, please wait...</div>
+<div id="topstatus" class="status topstatus">loading ffmpeg.js, please wait...</div>
 
 <div class="content">
 
