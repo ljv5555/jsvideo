@@ -9,18 +9,22 @@ div,input{padding:.5em .5em;margin:.5em .5em;white-space:nobreak;
 border:1px solid #abf;}
 input[readonly],.status{width:50%;background:#abf;opacity:0.5;}
 .topstatus{min-height:20px;width:90%;margin:10px 5% 10px 5%;}
+.content{display:none;}
 </style>
 <script src="/joey.js/joey.js"></script>
 <script src="jquery.min.js"></script>
 <script>
   window.ffmpegloaded=false;
-  window.ffmpegloadinterval=setInterval(function(){document.getElementById('status').innerHTML+='.';},500);
+  window.ffmpegloadinterval=setInterval(function(){document.getElementById('topstatus').innerHTML+='.';},500);
   joey.when('window.ffmpegloaded==true',function(){
     clearInterval(window.ffmpegloadinterval);
-    document.getElementById('status').innerHTML='';});
+    document.getElementById('topstatus').innerHTML='';});
+    jQuery('.content').slideDown();
 </script>
 <script async="async" onload="window.ffmpegloaded=true;" src="ffmpeg.js"></script>
 <script>
+
+/*jQuery(function(){*/
   
   window.file1=false;
   window.uia1 = [];
@@ -84,20 +88,26 @@ input[readonly],.status{width:50%;background:#abf;opacity:0.5;}
       }catch(ee){$('#status').val('error: '+ee.message);}
         
   }
-  
+
+/*});*/ 
 </script>
 </head>
 <body>
 <h3>JsVideo</h3>
 <div class="status" id="topstatus" class="topstatus status">loading ffmpeg.js, please wait...</div>
-<div>
-Video: 
-    <input type="file" name="file1" id="file1"/>
-    <input type="button" value="load" onclick="loadfile();"/>
-    <input type="button" value="process" onclick="process();"/>
-</div>
-<div>
-    Status: <input id="status" name="status" class="status" value="Load a file."/>
+
+<div class="content">
+
+  <div>
+  Video: 
+      <input type="file" name="file1" id="file1"/>
+      <input type="button" value="load" onclick="loadfile();"/>
+      <input type="button" value="process" onclick="process();"/>
+  </div>
+  <div>
+      Status: <input id="status" name="status" class="status" value="Load a file."/>
+  </div>
+
 </div>
 </body>
 </html>
