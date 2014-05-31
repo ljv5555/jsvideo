@@ -70,6 +70,7 @@ jQuery(function(){
       var uia=window.uia1;
       $('#status').val('processing '+file.name+'...');
       try{
+        if(console && console.log){console.log(uia);}
         var results = ffmpeg_run({
           files: [
             {
